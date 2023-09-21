@@ -14,6 +14,7 @@ const SignUpPage = () => {
   useEffect(() => {
     console.log(email);
     console.log(passwordConform());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password, confirmPassword]);
   const passwordConform = () => {
     if (
@@ -40,7 +41,7 @@ const SignUpPage = () => {
       const formData = new FormData(event!.currentTarget);
       const data = Object.fromEntries(formData.entries());
       console.log("DATA: ",data);
-      setEmail(data.email);
+      setEmail(data.email.toString());
     }
     else {
       console.log(email);
@@ -110,6 +111,7 @@ const SignUpPage = () => {
       </span>
       </div>
       <div className='w-1/3 flex flex-col gap-8 items-center'>
+        <form onSubmit={submitHandler}>
       <input 
       type="password" 
       placeholder="Password" 
@@ -125,7 +127,8 @@ const SignUpPage = () => {
       <button 
       className=' bg-red-600 text-white text-3xl p-4 w-1/3 disabled:bg-gray-500'
       disabled={!passwordConform()}
-      onClick={submitHandler}>Finish</button>
+      >Finish</button>
+      </form>
       </div>
       
       </div>

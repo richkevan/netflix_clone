@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const TrailerInfo = () => {
@@ -25,7 +25,3 @@ const TrailerInfo = () => {
 };
 
 export default TrailerInfo;
-
-export function loader() {
-  return <h1>Loader</h1>;
-} 

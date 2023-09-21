@@ -50,7 +50,7 @@ const HomePage = () => {
     }
   }
 
-  const handleVideoClick = (e:React.MouseEvent<HTMLDivElement, MouseEvent>, video: any) => {
+  const handleVideoClick = (video: any) => {
     navigate(`/trailer/${video.snippet.resourceId.videoId}`);
   }
 
@@ -95,7 +95,7 @@ const HomePage = () => {
             
             style={{backgroundImage: `url('${video.snippet.thumbnails.maxres.url}')`}}>
               <p className="bg-black bg-opacity-80 p-1">{video.snippet.title}</p>
-              <div className="w-full h-full opacity-0 absolute left-0 top-0" onClick={(e) => handleVideoClick(e,video)}></div>
+              <div className="w-full h-full opacity-0 absolute left-0 top-0" onClick={() => handleVideoClick(video)}></div>
             </div>
           ))}
           
