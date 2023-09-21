@@ -1,7 +1,6 @@
 {
-  "hosting":
-    {
-    "target": "netflix-richkevan",
+  "hosting": {
+    "target": "netflix-clone",
     "public": "./dist",
     "ignore": [
       "firebase.json",
