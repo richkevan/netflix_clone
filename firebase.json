@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "netflix-richkevan",
     "public": "public",
     "ignore": [
       "firebase.json",
