@@ -1,5 +1,6 @@
 {
-  "hosting": {
+  "hosting": [
+    {
     "target": "netflix-richkevan",
     "public": "public",
     "ignore": [
@@ -14,4 +15,5 @@
       }
     ]
   }
+]
 }
