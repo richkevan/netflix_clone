@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "rich-kevan"
-  }
+  },
+  "targets": {
+    "rich-kevan": {
+      "hosting": {
+        "netflix-clone": [
+          "netflix-richkevan"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
