@@ -3,17 +3,29 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
+  User
  } from "firebase/auth";
 import { createContext, useEffect, useState, useContext } from "react";
 import { appFirebase } from "./firebase-app";
 
 const firebaseAuth = getAuth(appFirebase);
 
-const FirebaseAuthContext = createContext(null);
+const FirebaseAuthContext = createContext<{
+  user: User | null
+  // tslint:disable-next-line: no-any
+  signInUser: ({ email, password }:{email:string, password: string}) => Promise<unknown>
+  signUpUser: ({ email, password }:{email:string, password: string}) => Promise<unknown>
+  signOutUser: () => Promise<unknown>
+}>({
+  user: null,
+  signInUser: () => Promise.resolve(),
+  signUpUser: () => Promise.resolve(),
+  signOutUser: () => Promise.resolve()
+});
 
-const FirebaseAuthProvider = ({ children }) => {
- const [user, setUser] = useState(null);
+const FirebaseAuthProvider = ({ children }:ContainerProps) => {
+ const [user, setUser] = useState<null | User>(null);
 
 useEffect(() => {
   const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
@@ -26,11 +38,11 @@ useEffect(() => {
   return () => unsubscribe();
 }, []);
 
-const signInUser = ({ email, password }) => {
+const signInUser = ({ email, password }:{email:string, password: string}) => {
   return signInWithEmailAndPassword(firebaseAuth, email, password)
  }
 
- const signUpUser = ({ email, password }) => {
+ const signUpUser = ({ email, password }:{email:string, password: string}) => {
   return createUserWithEmailAndPassword(firebaseAuth, email, password)
  }
 

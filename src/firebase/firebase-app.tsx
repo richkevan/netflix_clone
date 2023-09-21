@@ -1,5 +1,5 @@
 import { getAnalytics } from "firebase/analytics";
-import { getApp, initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
