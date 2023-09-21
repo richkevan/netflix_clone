@@ -4,6 +4,31 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Updload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-files
+          path: ./dist
+        
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
