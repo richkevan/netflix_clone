@@ -1,8 +1,11 @@
 {
-  "name": "netrailers",
+  "name": "Netflix Clone",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "A Netflix Clone",
+  "author": "Rich Kevan",
+  "homepage": "https://richkevan.github.io/netflix_clone/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
