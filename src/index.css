@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+  :root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    background-color: black;
+  
+    color-scheme: light dark;
+    color: rgb(255, 255, 255);
+    background-color: #242424;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html {
+    background-color: black;
+  }
+  
+  a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+  }
+  a:hover {
+    color: #535bf2;
+  }
+  
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: black;
+  }
+
+  .bg-Login {
+    background: linear-gradient(rgba(0,0,0,.6),rgba(0, 0, 0, 0.5),rgba(0,0,0,.6)), url("./assets/Netflix_BG.jpg");
+  }
+
+  .bg-Signup {
+    background: radial-gradient(rgba(0,0,0,.5),rgba(0,0,0,.7), rgba(0,0,0,1)), url("./assets/Netflix_BG.jpg");
+    background-position: bottom center;
+  }
+
+  .bg-Radial {
+    background: radial-gradient(circle at top,rgb(207, 0, 55) 20%,rgba(90, 34, 139, 1) 50%, rgb(0, 9, 75), rgba(0,0,0,1) 90%, rgba(0,0,0,.02) 98%);
+  }
