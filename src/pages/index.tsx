@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { useEffect, useState } from "react";
 import { getPlaylists, getVideosFromPlaylist} from "../utilities/axios";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useFirebaseAuth } from "../firebase/firebase-auth-context";
 import Loader from "../utilities/loader";
 const HomePage = () => {  
   const { user } = useFirebaseAuth();
-  const data = useLoaderData();
+  const { trailers } = useLoaderData() as { trailers: any[] };
+
   const navigate = useNavigate();
   const [updatedData, setUpdatedData] = useState(false);
   
@@ -22,34 +25,42 @@ const HomePage = () => {
     }, 15000);
     console.log("INDEX: ",user);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updatedData, user]);
   
-  const handleMouseOver = (e, video) => {
+  const handleMouseOver = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, video: any) => {
     const videoUrl = `https://www.youtube.com/embed/${video.snippet.resourceId.videoId}?start=30&end=60&autoplay=1&mute=1&controls=0&enablejsapi=1&fs=0&frameborder="0"`;
     const videoElement = document.createElement("iframe");
     videoElement.src = videoUrl;
     videoElement.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
     videoElement.allowFullscreen = true;
     videoElement.className = "absolute inset-0 w-full h-full object-cover rounded-xl";
-    // window.open(videoUrl, '_blank');
-    e.target.parentElement.prepend(videoElement);
+    // Use optional chaining operator to check if e.target is null or not
+    (e.target as HTMLElement | null)?.parentElement?.prepend(videoElement);
   }
 
-  const handleMouseLeave = (e) => {
-    e.target.parentElement.removeChild(e.target.parentElement.firstChild);
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const target = e.target as HTMLElement;
+    if (target) {
+      const parent = target.parentElement;
+      if (parent && parent.firstChild) {
+        parent.removeChild(parent.firstChild as Node);
+      }
+    }
   }
 
-  const handleVideoClick = (e, video) => {
+  const handleVideoClick = (e:React.MouseEvent<HTMLDivElement, MouseEvent>, video: any) => {
     navigate(`/trailer/${video.snippet.resourceId.videoId}`);
   }
 
-  const videoScrollBack = (array) => {
+  const videoScrollBack = (array: any[]) => {
     const lastVideo = array.pop();
     array.unshift(lastVideo);
     setUpdatedData(true);
     return array;
   }
-  const videoScrollForward = (array) => {
+  const videoScrollForward = (array: any[]) => {
     const firstVideo = array.shift();
     array.push(firstVideo);
     setUpdatedData(true);
@@ -62,7 +73,7 @@ const HomePage = () => {
     :
     <div className="min-h-screen w-full overflow-x-clip">
   <div className="min-h-screen mx-auto pt-24 flex flex-col gap-[4vw] pb-12">
-    {data.trailers.map((playlist) => (
+    {trailers.map((playlist: any) => (
      <div key={playlist.playlistId}>
         <h3 className="text-3xl font-bold p-4">{playlist.playlistTitle}</h3>
         <div className="flex gap-[1vw] relative px-4">
@@ -75,7 +86,7 @@ const HomePage = () => {
           className="absolute right-0 text-8xl text-white z-30 flex items-center h-full opacity-40 bg-black bg-opacity-100  hover:opacity-100 rounded-l-xl cursor-pointer"
           onClick={() => videoScrollForward(playlist.playlistItems)}>{'>'}
           </div>
-          {playlist.playlistItems.map((video) => (
+          {playlist.playlistItems.map((video: any) => (
             <div 
             key={video.id} 
             className='relative rounded-xl w-[28vw] aspect-video min-h-[16vw] bg-cover bg-center p-4'
@@ -101,10 +112,11 @@ const HomePage = () => {
 
 export default HomePage;
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const loader = async () => {
   const response = await getPlaylists();
   const trailer = await Promise.all(
-    response.data.items.map(async (playlist) => (
+    response.data.items.map(async (playlist: any) => (
       {
         playlistId: playlist.id,
         playlistTitle: playlist.snippet.title,
