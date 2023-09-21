@@ -30,6 +30,7 @@ jobs:
           VITE_FIREBASE_MESSAGINGSENDERID: ${{ secrets.VITE_FIREBASE_MESSAGINGSENDERID }}
           VITE_FIREBASE_APPID: ${{ secrets.VITE_FIREBASE_APPID }}
           VITE_FIREBASE_MEASUREMENTID: ${{ secrets.VITE_FIREBASE_MEASUREMENTID }}
+          VITE_YOUTUBE_API_KEY: ${{ secrets.VITE_YOUTUBE_API_KEY }}
 
       - name: Deploy production
         uses: actions/upload-artifact@v3
