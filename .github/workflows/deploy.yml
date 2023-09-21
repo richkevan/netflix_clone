@@ -6,26 +6,23 @@ on:
       - main
 
 jobs:
-      
-
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
 
-    - name: Build Project
-      run: npm build
-      env:
+      - name: Build Project
+        run: npm run build
+        env:
         VITE_FIREBASE_APIKEY: ${{ secrets.VITE_FIREBASE_APIKEY }}
         VITE_FIREBASE_AUTHDOMAIN: ${{ secrets.VITE_FIREBASE_AUTHDOMAIN }}
         VITE_FIREBASE_PROJECTID: ${{ secrets.VITE_FIREBASE_PROJECTID }}
@@ -34,15 +31,28 @@ jobs:
         VITE_FIREBASE_APPID: ${{ secrets.VITE_FIREBASE_APPID }}
         VITE_FIREBASE_MEASUREMENTID: ${{ secrets.VITE_FIREBASE_MEASUREMENTID }}
 
-    - name: Configure GH Pages
-      uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy production
+        uses: actions/upload-artifact@v3
+        with:
+          name: production
+          path: dist
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Download
+      uses: actions/download-artifact@v3
       with:
+        name: production
         path: ./dist
-    
-    - name: Deploy
-      id: deploy
-      uses: actions/deploy-to-github-pages@v2
+
+    - name: Deploy to GH Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
   
