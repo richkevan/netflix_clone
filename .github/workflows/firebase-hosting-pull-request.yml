@@ -50,3 +50,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_RICH_KEVAN }}'
           projectId: rich-kevan
+          channelId: 'github-pr-${{ github.event.number }}'
