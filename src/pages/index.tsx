@@ -22,7 +22,7 @@ const HomePage = () => {
         console.log("INDEX: ",user);
         navigate("/login");
       }
-    }, 15000);
+    }, 6000);
     console.log("INDEX: ",user);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,7 +69,12 @@ const HomePage = () => {
 
   return (
     <>
-    {!user ? <Loader />
+    {!user ? 
+    <div className="min-h-screen w-full overflow-x-clip">
+    <div className="min-h-screen container mx-auto pt-24 flex justify-center items-center">
+    <Loader />
+    </div>
+    </div>
     :
     <div className="min-h-screen w-full overflow-x-clip">
   <div className="min-h-screen mx-auto pt-24 flex flex-col gap-[4vw] pb-12">
