@@ -4,10 +4,6 @@ import { useParams } from "react-router-dom";
 const TrailerInfo = () => {
   const params = useParams();
 
-  useEffect(() => {
-    console.log(params.trailerId);
-  }, [params]);
-
   return (
     <div className="min-h-screen w-full">
       <div className="h-screen w-full flex flex-col justify-center items-center">

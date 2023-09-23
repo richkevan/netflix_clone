@@ -6,7 +6,6 @@ const Layout = ({ children }:ContainerProps) => {
   // const user = useAuth();
   const { user, signOutUser } = useFirebaseAuth();
   const navigate = (path: string) => window.location.pathname = path;
-  console.log(children);
   return (
     <div>
       <header className="grid grid-cols-2 fixed top-0 w-full z-20 align-middle h-[90px]">

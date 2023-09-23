@@ -12,8 +12,6 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(email);
-    console.log(passwordConform());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password, confirmPassword]);
   const passwordConform = () => {
@@ -36,17 +34,12 @@ const SignUpPage = () => {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(email, password, confirmPassword);
     if (email === "") {
       const formData = new FormData(event!.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      console.log("DATA: ",data);
       setEmail(data.email.toString());
     }
     else {
-      console.log(email);
-
-      console.log(password, confirmPassword);
       signUpUser({email, password});
       navigate("/")
     }

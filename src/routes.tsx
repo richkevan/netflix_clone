@@ -16,6 +16,6 @@ const fileRouter = createBrowserRouter(routes.map(({path, element: Element, load
   return {path, element: <Element />, loader, errorElement: <ErrorPage />}
 }))
 
-console.log("BROWSER ROUTER: ",fileRouter)
+console.log(routes, fileRouter)
 
 export { fileRouter }

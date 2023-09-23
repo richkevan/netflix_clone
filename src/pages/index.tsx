@@ -19,12 +19,9 @@ const HomePage = () => {
     }
     setTimeout(() => {
       if (!user) {
-        console.log("INDEX: ",user);
         navigate("/login");
       }
-    }, 6000);
-    console.log("INDEX: ",user);
-
+    }, 3000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updatedData, user]);
   
