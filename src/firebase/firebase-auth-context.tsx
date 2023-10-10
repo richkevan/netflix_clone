@@ -33,9 +33,12 @@ useEffect(() => {
       setUser(user);
     } else {
       setUser(null);
+      if (!(window.location.href.includes("login") || window.location.href.includes("signup") ) && !user) {
+        window.location.assign(import.meta.env.BASE_URL + "login/");
+      }
     }
   });
-  return () => unsubscribe();
+  return () => {unsubscribe()};
 }, []);
 
 const signInUser = ({ email, password }:{email:string, password: string}) => {
@@ -50,7 +53,7 @@ const signOutUser = () => {
   return signOut(firebaseAuth)
  }
 
- const useFirebaseAuth = {
+ const FirebaseAuthObj = {
   user,
   signInUser,
   signUpUser,
@@ -59,7 +62,7 @@ const signOutUser = () => {
 
 
 return (
-  <FirebaseAuthContext.Provider value={useFirebaseAuth}>
+  <FirebaseAuthContext.Provider value={FirebaseAuthObj}>
     {children}
   </FirebaseAuthContext.Provider>
 )

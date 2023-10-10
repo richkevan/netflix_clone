@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useFirebaseAuth } from "../firebase/firebase-auth-context";
-import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
   const { signInUser, user } = useFirebaseAuth();
-  const navigate = useNavigate();
+  const navigate = (url: string) => window.location.assign(import.meta.env.BASE_URL + url);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +24,7 @@ const Login = () => {
 
     useEffect(() => {
       if (user) {
-        navigate("/");
+        navigate("");
       }
     }, [user]);
 
@@ -53,7 +52,7 @@ const Login = () => {
             
             <div className="flex flex-col flex-[1_1_45%]">
             <div>
-                <p className="text-white mt-4">New to Netflix? <a href="/signup" className="text-red-600">Sign up now.</a></p>
+                <p className="text-white mt-4">New to Netflix? <a href={import.meta.env.BASE_URL + "signup/"} className="text-red-600">Sign up now.</a></p>
             </div>
             <div>
               <p className="text-white text-sm">This page is protected by Google reCAPTCHA to ensure you're not a bot.<a>Learn more.</a></p>

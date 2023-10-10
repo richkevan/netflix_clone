@@ -1,30 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { useEffect, useState } from "react";
-import { getPlaylists, getVideosFromPlaylist} from "../utilities/axios";
-import { useLoaderData, useNavigate } from "react-router-dom";
-import { useFirebaseAuth } from "../firebase/firebase-auth-context";
-import Loader from "../utilities/loader";
+import { getPlaylists, getVideosFromPlaylist} from "./utilities/axios";
+import { useFirebaseAuth } from "./firebase/firebase-auth-context";
+import Loader from "./utilities/loader";
+
 const HomePage = () => {  
   const { user } = useFirebaseAuth();
-  const { trailers } = useLoaderData() as { trailers: any[] };
-
-  const navigate = useNavigate();
+  const [trailers, setTrailers] = useState<any[]| never[]>([]);
   const [updatedData, setUpdatedData] = useState(false);
+  const navigate = (url: string) => window.location.assign(import.meta.env.BASE_URL + url);
+ 
+
+  const loader = async () => {
+    const response = await getPlaylists();
+    const trailer = await Promise.all(
+      response.data.items.map(async (playlist: any) => (
+        {
+          playlistId: playlist.id,
+          playlistTitle: playlist.snippet.title,
+          playlistItems: (await getVideosFromPlaylist(playlist.id)).data.items
+        }
+      ))
+    )
+    return trailer;
+  }
   
 
   useEffect(() => {
-    if (updatedData) {
-      setUpdatedData(false);
-    }
-    setTimeout(() => {
-      if (!user) {
-        navigate("/login");
+    loader().then(
+      (data) => {
+        setTrailers(data);
       }
-    }, 3000);
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [updatedData, user]);
-  
+    }, [user, updatedData]);
+    
+    
   const handleMouseOver = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, video: any) => {
     const videoUrl = `https://www.youtube.com/embed/${video.snippet.resourceId.videoId}?start=30&end=60&autoplay=1&mute=1&controls=0&enablejsapi=1&fs=0&frameborder="0"`;
     const videoElement = document.createElement("iframe");
@@ -48,7 +60,7 @@ const HomePage = () => {
   }
 
   const handleVideoClick = (video: any) => {
-    navigate(`/trailer/${video.snippet.resourceId.videoId}`);
+    navigate(`trailer/${video.snippet.resourceId.videoId}`);
   }
 
   const videoScrollBack = (array: any[]) => {
@@ -75,7 +87,7 @@ const HomePage = () => {
     :
     <div className="min-h-screen w-full overflow-x-clip">
   <div className="min-h-screen mx-auto pt-24 flex flex-col gap-[4vw] pb-12">
-    {trailers.map((playlist: any) => (
+    {trailers && trailers.map((playlist: any) => (
      <div key={playlist.playlistId}>
         <h3 className="text-3xl font-bold p-4">{playlist.playlistTitle}</h3>
         <div className="flex gap-[1vw] relative px-4">
@@ -115,16 +127,3 @@ const HomePage = () => {
 export default HomePage;
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const loader = async () => {
-  const response = await getPlaylists();
-  const trailer = await Promise.all(
-    response.data.items.map(async (playlist: any) => (
-      {
-        playlistId: playlist.id,
-        playlistTitle: playlist.snippet.title,
-        playlistItems: (await getVideosFromPlaylist(playlist.id)).data.items
-      }
-    ))
-  )
-  return { trailers: trailer }; 
-}
