@@ -1,0 +1,1 @@
+import{c as s,j as e,R as c}from"./index-c9ff5323.js";s.createRoot(document.getElementById("root")).render(e.jsx(c.StrictMode,{children:e.jsx("div",{className:"min-h-screen w-full",children:e.jsxs("div",{className:"h-screen w-full flex flex-col justify-center items-center",children:[e.jsx("h1",{children:"404"}),e.jsx("h2",{children:"Page Not Found"})]})})}));
