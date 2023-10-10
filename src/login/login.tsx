@@ -8,6 +8,7 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("submit");
     const formData = new FormData(e.currentTarget);
     const data: { [key: string]: string } = {};
     for (const [key, value] of formData.entries()) {
@@ -15,9 +16,19 @@ const Login = () => {
     }
     signInUser({ email: data.email, password: data.password })
       .then(() => {
-        navigate("/");
+        navigate("");
       })
       .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const demoLogin = () => {
+    signInUser({ email: "demo@richkevan.com", password: "password" })
+    .then(() => {
+        navigate("");
+      })
+    .catch((error) => {
         console.log(error);
       });
   };
@@ -31,7 +42,7 @@ const Login = () => {
    
 
     return (
-      <div className="min-h-screen w-full bg-Login">
+      <div className="min-h-screen w-full bg-Login bg-no-repeat">
         <div className="h-screen container mx-auto grid place-items-center before:h-24 z-20 relative">
           <div className="w-[450px] h-[75vh] bg-black bg-opacity-80 mb-24 px-16 pt-16 pb-10 rounded-md flex flex-col">
             <div className=" flex-[2_2_55%]">
@@ -40,6 +51,10 @@ const Login = () => {
               <input type="text" name="email" placeholder="Email or phone number" className="w-full h-10 bg-gray-500 mt-4 mb-4 px-2 text-white placeholder:text-white rounded-md"/>
               <input type="password" name="password" placeholder="Password" className="w-full h-10 bg-gray-500 mt-4 mb-4 px-2 text-white placeholder:text-white rounded-md"/>
               <button className="w-full h-10 bg-red-600 mt-4 mb-4 px-2 text-white placeholder:text-white rounded-md" type="submit">Sign In</button>
+              <button 
+              className="w-full h-10 bg-red-600 mt-4 mb-4 px-2 text-white placeholder:text-white rounded-md" 
+              type="button"
+              onClick={demoLogin}>Login with demo account</button>
               <div className="flex justify-between">
                 <div>
                   <label htmlFor="remember" className="text-white">Remember me</label>
