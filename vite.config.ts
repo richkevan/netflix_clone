@@ -12,12 +12,14 @@ const signup = resolve(appRoot, 'signup/index.html')
 export default defineConfig({
   base: "/netflix_clone/",
   root: appRoot,
+  publicDir: resolve(__dirname, 'public'),
   plugins: [react(), svgr()],
   build: {
     outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
     rollupOptions: {
       input: {
+        index: resolve(appRoot, 'index.html'),
         "404": fallback,
         login,
         signup,
