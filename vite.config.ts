@@ -10,7 +10,6 @@ const signup = resolve(appRoot, 'signup/index.html')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/netflix_clone/",
   root: appRoot,
   publicDir: resolve(__dirname, 'public'),
   plugins: [react(), svgr()],

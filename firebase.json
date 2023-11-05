@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "target": "netflix-clone",
-    "public": "/dist",
+    "site": "kevan-netflix",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -10,7 +10,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "index.html"
       }
     ]
   }
